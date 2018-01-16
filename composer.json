@@ -1,0 +1,15 @@
+{
+  "name": "nakedcreativity/filestack",
+  "require": {
+  	"guzzlehttp/guzzle":"~6.2"
+  },
+  "require-dev": {
+  	"guzzlehttp/guzzle":"~6.2"
+  	},
+  "autoload": {
+      "psr-4": {
+          "NakedCreativity\\Filestack\\": "src"
+      }
+  }
+
+}
