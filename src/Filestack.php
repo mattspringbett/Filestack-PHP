@@ -50,25 +50,42 @@ class Filestack {
 
 		$urlString = $task.'=';
 
-		foreach($options as $optionKey => $option){
+			if(is_array($options)){
 
-			if(is_array($option)){
+				print_r($options);
 
-				foreach($option as $item){
-					$items .= $item.',';
+				foreach($options as $itemKey => $item){
+
+					if(is_array($item)){
+
+						foreach($item as $subItem){
+							$items .= $subItem.',';
+						}
+
+						$items = rtrim($items,',');
+						$items = '['.$items.']';
+
+					}
+					else{
+						$items = rtrim($items,',');
+						$items .= $item.',';
+					}
+
+					
 				}
-
-				$items = rtrim($items,',');
-
-				$urlString .= $optionKey.':['.$items.']';
+				
+				$urlString .= $itemKey.':'.$items;
+				
+				
+			}
+			else if(empty($options)){
+				$urlString = $task;
 			}
 			else
 			{
-				$urlString .= $optionKey.':'.$option.',';
+				$urlString .= $options.',';
 			}
 			
-		}
-
 		$urlString = rtrim($urlString,',');
 
 		return $urlString;
@@ -84,6 +101,8 @@ class Filestack {
 			$urlComponents[] = $this->generateUrlComponent($optionKey,$option);
 
 		}
+
+		print_r($urlComponents);
 
 		$filestackJson = $this->makeProcessRequest(implode('/',$urlComponents).'/'.$url);
 
